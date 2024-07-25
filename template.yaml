@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  FlaskFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: scraper.lambda_handler
+      Runtime: python3.9
+      CodeUri: .
+      MemorySize: 128
+      Timeout: 30
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      Environment:
+        Variables:
+          FLASK_ENV: production
+      Events:
+        ProductDetailsPost:
+          Type: Api
+          Properties:
+            Path: /productDetails
+            Method: POST
+
+Outputs:
+  ProductDetailsApiEndpoint:
+    Description: "API Gateway endpoint URL for product details"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/productDetails"

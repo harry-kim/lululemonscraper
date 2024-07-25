@@ -1,0 +1,165 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "API documentation for the product details scraper",
+      "version": "1.0.0",
+      "title": "Product Scraper API"
+    },
+    "host": "localhost:5000",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "productDetails",
+        "description": "Scraper operations"
+      }
+    ],
+    "paths": {
+      "/productDetails": {
+        "post": {
+          "tags": ["productDetails"],
+          "summary": "Scrape product details",
+          "description": "Fetch and parse product details from the given URLs",
+          "operationId": "postProductDetails",
+          "consumes": ["application/json"],
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "List of URLs to scrape",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "urls": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "urls": [
+                    "https://shop.lululemon.com/c/womens-leggings/_/N-8r6?format=json",
+                    "https://shop.lululemon.com/c/accessories/_/N-1z0xcmkZ1z0xl44Z8ok?format=json"
+                  ]
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Scraped product details",
+              "schema": {
+                "$ref": "#/definitions/ProductDetailsResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "ProductDetailsResponse": {
+        "type": "object",
+        "properties": {
+          "product_details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ProductDetail"
+            }
+          }
+        }
+      },
+      "ProductDetail": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "example": "https://shop.lululemon.com/c/womens-leggings/_/N-8r6?format=json"
+          },
+          "records": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ProductRecord"
+            }
+          }
+        }
+      },
+      "ProductRecord": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "Wunder Train High-Rise Tight 28\""
+            }
+          },
+          "title": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "Wunder Train High-Rise Tight 28\" | Women's Leggings/Tights"
+            }
+          },
+          "price": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "98"
+            }
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "https://images.lululemon.com/is/image/lululemon/LW5EOLS_052261_1"
+            }
+          },
+          "sizes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "8"
+            }
+          },
+          "colors": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "Pow Pink Tone"
+            }
+          },
+          "activities": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "training"
+            }
+          },
+          "available": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "false"
+            }
+          },
+          "url": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "/p/womens-leggings/Wunder-Train-HR-Tight-28/_/prod10440282"
+            }
+          },
+          "category": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "Leggings"
+            }
+          }
+        }
+      }
+    }
+  }
+  
